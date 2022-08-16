@@ -28,11 +28,35 @@ const responses = [
     "This is democracy manifest",
     "Get your hand off my penis",
     "A succulent Chinese meal?",
-    "Are you waiting to receive my limp penis?"
+    "Are you waiting to receive my limp penis?",
+    "I see that you know your judo well"
 ]
 
+client.on('interactionCreate', async (interaction) => {
+    // define constants
+    const guild = client.guilds.cache.get(interaction.guild.id)
+    const member = interaction.member
+
+
+    if (interaction.isCommand()) {
+
+        const command = client.commands.get(interaction.commandName);
+
+        if (!command) return;
+
+        if (command == 'start' || command == 'setup') {
+            console.log('ran a non-baking command')
+            return await command.execute(client, interaction)
+        } else {
+
+            return await request(client, interaction, cache)
+        }
+
+    }
+})
+
 client.on("messageCreate", (message) => {
-    const index = Math.floor(Math.random() * 5);
+    const index = Math.floor(Math.random() * 6);
     if (message.content.toLowerCase().includes("succulent") && message.author.username !== "Succubot")
         message.reply({
             content: responses[index]

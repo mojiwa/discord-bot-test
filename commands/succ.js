@@ -6,6 +6,11 @@ const {
     MessageEmbed,
 } = require('discord.js')
 
+const gifs = [
+    'https://c.tenor.com/X-dsWnwJkZAAAAAd/succulent-chinese-meal-democracy-manifest.gif',
+    'https://c.tenor.com/p2nzLP2fqdgAAAAd/charles-dozsa-under-arrest.gif',
+    'https://c.tenor.com/0xnVtnrCJnAAAAAd/charles-dozsa-succulent-chinese-meal.gif',
+]
 
 module.exports = {
     name: "succ",
@@ -29,10 +34,12 @@ module.exports = {
         var embed = new MessageEmbed()
             .setColor('#FFDB69')
 
+        const index = index = Math.floor(Math.random() * 3);
+
         const score = async function oven() {
             embed
                 .setDescription('What is the charge?')
-                .setImage('https://c.tenor.com/X-dsWnwJkZAAAAAd/succulent-chinese-meal-democracy-manifest.gif')
+                .setImage(gifs[index])
             interaction.reply({
                 embeds: [embed]
             })
