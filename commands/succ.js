@@ -23,14 +23,13 @@ module.exports = {
     async execute(client, interaction, cache) {
         const member = interaction.member
         const targetMember = interaction.options.getUser('user');
-        console.log(targetMember);
 
-        var initCache = cache.get(member.id);
+        var initCache = cache.get(targetMember.id);
 
         var embed = new MessageEmbed()
             .setColor('#FFDB69')
 
-        const quality = async function oven() {
+        const score = async function oven() {
             embed
                 .setDescription('What is the charge?')
                 .setImage('https://c.tenor.com/X-dsWnwJkZAAAAAd/succulent-chinese-meal-democracy-manifest.gif')
@@ -38,12 +37,12 @@ module.exports = {
                 embeds: [embed]
             })
 
-            var quality = 1
+            var score = 1
 
-            return quality
+            return score
         }
 
-        await quality().then((value) => {
+        await score().then(() => {
             const xp = initCache + 1;
             cache.set(targetMember.id, xp);
 
