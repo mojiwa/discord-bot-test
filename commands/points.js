@@ -32,12 +32,8 @@ module.exports = {
         if (checkCache === undefined || checkCache === null || checkCache === NaN)
             checkCache = 0;
 
-        var res = new MessageEmbed()
-        .setDescription(`${member.username} has **${checkCache}** succulent points!\n`)
-
-        interaction.channel.send({
-            content: `<@${interaction.member.id}>`,
-            embeds: [res]
-        })
+        return interaction.reply({
+            content: `${member.username} has **${checkCache}** succulent points!\n`
+        });
     }
 }
