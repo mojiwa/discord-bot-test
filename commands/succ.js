@@ -45,14 +45,14 @@ module.exports = {
 
         await quality().then((value) => {
             const xp = initCache + 1;
-            cache.set(member.id, xp);
+            cache.set(targetMember.id, xp);
 
-            var checkCache = cache.get(member.id);
+            var checkCache = cache.get(targetMember.id);
             var res = new MessageEmbed()
                 .setDescription(`You have **${checkCache}** succulent points!\n`)
 
             interaction.channel.send({
-                content: `<@${interaction.member.id}>`,
+                content: `<@${targetMember.id}>`,
                 embeds: [res]
             })
 
