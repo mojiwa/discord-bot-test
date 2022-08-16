@@ -14,7 +14,7 @@ module.exports = {
             return await command.execute(client, interaction, cache)
         } else {
             // if not set the cmd counter to 1
-            cache.set(key, 1)
+            cache.set(key, 0)
             return await command.execute(client, interaction, cache)
         }
 
