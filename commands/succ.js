@@ -14,22 +14,11 @@ const gifs = [
     'https://c.tenor.com/1FAEq7NOiiYAAAAC/limp-penis.gif'
 ]
 
-const responses = [
-    "What is the charge?",
-    "This is democracy manifest",
-    "Get your hand off my penis",
-    "A succulent Chinese meal?",
-    "Are you waiting to receive my limp penis?",
-    "I see that you know your judo well"
-]
-
 const score = async function charge(interaction) {
     var embed = new MessageEmbed()
     .setColor('#FFDB69')
     const index = Math.floor(Math.random() * 5);
-    const indexResponses = Math.floor(Math.random() * 6);
     embed
-        .setDescription(responses[indexResponses])
         .setImage(gifs[index])
     interaction.reply({
         embeds: [embed]
