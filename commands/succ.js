@@ -6,9 +6,6 @@ const {
     MessageEmbed,
 } = require('discord.js')
 
-const api = require('../src/handlers/oven')
-const rng = require('../src/handlers/rng')
-const wait = require('util').promisify(setTimeout)
 
 module.exports = {
     name: "succ",
@@ -16,12 +13,12 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('succ')
         .setDescription('succulent')
-        .addUserOption(option => {
+        .addUserOption(option => 
             option
                 .setName('user')
                 .setDescription('Who do you want to succ')
                 .setRequired(true)
-        }),
+        ),
 
     async execute(client, interaction, cache) {
         const member = interaction.member
