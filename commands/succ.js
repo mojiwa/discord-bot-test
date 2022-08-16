@@ -29,42 +29,53 @@ module.exports = {
         const member = interaction.member
         const targetMember = interaction.options.getUser('user');
 
-        var initCache = cache.get(targetMember.id);
-        console.log(initCache);
-        if (initCache === undefined || initCache === null || initCache === NaN)
-            initCache = 0;
-
-        var embed = new MessageEmbed()
-            .setColor('#FFDB69')
-
-        const index = Math.floor(Math.random() * 3);
-
-        const score = async function oven() {
-            embed
-                .setDescription('What is the charge?')
-                .setImage(gifs[index])
-            interaction.reply({
-                embeds: [embed]
-            })
-
-            var score = 1
-
-            return score
-        }
-
-        await score().then(() => {
-            const xp = initCache + 1;
-            cache.set(targetMember.id, xp);
-
-            var checkCache = cache.get(targetMember.id);
+        if (member.id === targetMember.id) {
             var res = new MessageEmbed()
-                .setDescription(`You have **${checkCache}** succulent points!\n`)
+                .setDescription(`You are cheeky - you can't give yourself points... not very succulent of you...\n`)
 
             interaction.channel.send({
-                content: `<@${targetMember.id}>`,
+                content: `<@${member.id}>`,
                 embeds: [res]
-            })
+            });
 
-        })
+            return;
+        } else {
+            var initCache = cache.get(targetMember.id);
+            if (initCache === undefined || initCache === null || initCache === NaN)
+                initCache = 0;
+
+            var embed = new MessageEmbed()
+                .setColor('#FFDB69')
+
+            const index = Math.floor(Math.random() * 3);
+
+            const score = async function oven() {
+                embed
+                    .setDescription('What is the charge?')
+                    .setImage(gifs[index])
+                interaction.reply({
+                    embeds: [embed]
+                })
+
+                var score = 1
+
+                return score
+            }
+
+            await score().then(() => {
+                const xp = initCache + 1;
+                cache.set(targetMember.id, xp);
+
+                var checkCache = cache.get(targetMember.id);
+                var res = new MessageEmbed()
+                    .setDescription(`You have **${checkCache}** succulent points!\n`)
+
+                interaction.channel.send({
+                    content: `<@${targetMember.id}>`,
+                    embeds: [res]
+                })
+
+            })
+    }
     }
 }
