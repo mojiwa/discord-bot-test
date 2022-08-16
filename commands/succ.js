@@ -46,12 +46,8 @@ module.exports = {
         const targetMember = interaction.options.getUser('user');
 
         if (member.id === targetMember.id) {
-            var res = new MessageEmbed()
-                .setDescription(`You are cheeky - you can't give yourself points... not very succulent of you...\n`)
-
-            interaction.channel.respond({
-                content: `<@${member.id}>`,
-                embeds: [res]
+            return interaction.reply({
+                content: `You are being cheeky. You cannot give yourself points... that's not very succulent of you.`
             });
         } else {
             var initCache = cache.get(targetMember.id);
@@ -66,7 +62,7 @@ module.exports = {
                 var res = new MessageEmbed()
                     .setDescription(`You have **${checkCache}** succulent points!\n`)
 
-                interaction.channel.respond({
+                interaction.channel.send({
                     content: `<@${targetMember.id}>`,
                     embeds: [res]
                 })

@@ -1,21 +1,17 @@
 {
-  "name": "heroku-baker",
+  "name": "Succubot",
   "version": "1.0.0",
-  "description": "heroku sample app",
+  "description": "Succubot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jcheonsa/heroku-baker.git"
+    "url": "git+https://github.com/mojiwa/discord-bot-test.git"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jcheonsa/heroku-baker/issues"
-  },
-  "homepage": "https://github.com/jcheonsa/heroku-baker#readme",
   "dependencies": {
     "@discordjs/rest": "^0.4.1",
     "discord-api-types": "^0.33.0",

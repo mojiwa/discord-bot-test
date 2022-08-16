@@ -44,8 +44,7 @@ client.on('interactionCreate', async (interaction) => {
 
         if (!command) return;
 
-        if (command == 'start' || command == 'setup') {
-            console.log('ran a non-baking command')
+        if (command == 'start') {
             return await command.execute(client, interaction)
         } else {
 
@@ -57,7 +56,7 @@ client.on('interactionCreate', async (interaction) => {
 
 client.on("messageCreate", (message) => {
     const index = Math.floor(Math.random() * 6);
-    if (message.content.toLowerCase().includes("succulent") && message.author.username !== "Succubot")
+    if (message.content.toLowerCase().includes("succ") && message.author.username !== "Succubot")
         message.reply({
             content: responses[index]
         });

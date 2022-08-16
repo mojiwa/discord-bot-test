@@ -35,7 +35,7 @@ module.exports = {
         var res = new MessageEmbed()
         .setDescription(`${member.username} has **${checkCache}** succulent points!\n`)
 
-        interaction.channel.respond({
+        interaction.channel.send({
             content: `<@${interaction.member.id}>`,
             embeds: [res]
         })
