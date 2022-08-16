@@ -64,10 +64,3 @@ client.on("messageCreate", (message) => {
 
 
 client.login(TOKEN);
-
-// keep awake 
-var http = require("http");
-setInterval(function() {
-    http.get("https://succu-bot.herokuapp.com/");
-    console.log('Keeping alive');
-}, 300000); // every 5 minutes (300000)
