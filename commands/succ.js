@@ -16,14 +16,17 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('succ')
         .setDescription('succulent')
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('chinese')
-                .setDescription('A Chinese meal?')),
+        .addUserOption(option => {
+            option
+                .setName('user')
+                .setDescription('Who do you want to succ')
+                .setRequired(true)
+        }),
 
     async execute(client, interaction, cache) {
         const member = interaction.member
-        const guild = client.guilds.cache.get(interaction.guild.id)
+        const targetMember = interaction.option.getUser('user');
+        console.log(targetMember);
 
         var initCache = cache.get(member.id);
 
@@ -31,23 +34,18 @@ module.exports = {
             .setColor('#FFDB69')
 
         const quality = async function oven() {
-            console.log(interaction.options.content);
-            switch (interaction.options.getSubcommand()) {
-                // which bread subcommand was clicked
-                case 'chinese':
-                    embed
-                        .setDescription('What is the charge?')
-                        .setImage('https://tenor.com/view/succulent-chinese-meal-democracy-manifest-police-fake-gif-16970184')
-                    interaction.reply({
-                        embeds: [embed]
-                    })
+            embed
+                .setDescription('What is the charge?')
+                .setImage('https://c.tenor.com/X-dsWnwJkZAAAAAd/succulent-chinese-meal-democracy-manifest.gif')
+            interaction.reply({
+                embeds: [embed]
+            })
 
-                    var quality = 1
+            var quality = 1
 
-                    return quality
-                    break;
-            }
+            return quality
         }
+
         await quality().then((value) => {
             const xp = initCache + 1;
             cache.set(member.id, xp);
