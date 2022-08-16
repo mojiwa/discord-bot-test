@@ -126,4 +126,13 @@ client.on('interactionCreate', async (interaction) => {
 
     }
 })
+
+client.on("messageCreate", (message) => {
+    if (message.content.toLowerCase().includes("succulent"))
+        message.reply({
+            content: 'What is the charge?'
+        });
+})
+
+
 client.login(TOKEN);
