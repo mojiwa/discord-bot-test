@@ -14,12 +14,22 @@ const gifs = [
     'https://c.tenor.com/1FAEq7NOiiYAAAAC/limp-penis.gif'
 ]
 
+const responses = [
+    "What is the charge?",
+    "This is democracy manifest",
+    "Get your hand off my penis",
+    "A succulent Chinese meal?",
+    "Are you waiting to receive my limp penis?",
+    "I see that you know your judo well"
+]
+
 const score = async function charge(interaction) {
     var embed = new MessageEmbed()
     .setColor('#FFDB69')
     const index = Math.floor(Math.random() * 5);
+    const indexResponses = Math.floor(Math.random() * 6);
     embed
-        .setDescription('What is the charge?')
+        .setDescription(responses[indexResponses])
         .setImage(gifs[index])
     interaction.reply({
         embeds: [embed]
@@ -39,7 +49,7 @@ module.exports = {
         .addUserOption(option => 
             option
                 .setName('user')
-                .setDescription('Who do you want to succ')
+                .setDescription('Who do you want to award succulent points to?')
                 .setRequired(true)
         ),
 
@@ -62,7 +72,7 @@ module.exports = {
 
                 var checkCache = cache.get(targetMember.id);
                 var res = new MessageEmbed()
-                    .setDescription(`You have **${checkCache}** succulent points!\n`)
+                    .setDescription(`Congratulations! You have **${checkCache}** succulent points!\n`)
 
                 interaction.channel.send({
                     content: `<@${targetMember.id}>`,
