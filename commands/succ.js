@@ -34,7 +34,7 @@ module.exports = {
         var embed = new MessageEmbed()
             .setColor('#FFDB69')
 
-        const index = index = Math.floor(Math.random() * 3);
+        const index = Math.floor(Math.random() * 3);
 
         const score = async function oven() {
             embed
