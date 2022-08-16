@@ -22,7 +22,7 @@ module.exports = {
 
     async execute(client, interaction, cache) {
         const member = interaction.member
-        const targetMember = interaction.option.getUser('user');
+        const targetMember = interaction.options.getUser('user');
         console.log(targetMember);
 
         var initCache = cache.get(member.id);
