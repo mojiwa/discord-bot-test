@@ -10,12 +10,14 @@ const gifs = [
     'https://c.tenor.com/X-dsWnwJkZAAAAAd/succulent-chinese-meal-democracy-manifest.gif',
     'https://c.tenor.com/p2nzLP2fqdgAAAAd/charles-dozsa-under-arrest.gif',
     'https://c.tenor.com/0xnVtnrCJnAAAAAd/charles-dozsa-succulent-chinese-meal.gif',
+    'https://c.tenor.com/GiEE0XXYT2gAAAAd/succulent-chinese-meal-paul-charles-dozsa.gif',
+    'https://c.tenor.com/1FAEq7NOiiYAAAAC/limp-penis.gif'
 ]
 
 const score = async function charge(interaction) {
     var embed = new MessageEmbed()
     .setColor('#FFDB69')
-    const index = Math.floor(Math.random() * 3);
+    const index = Math.floor(Math.random() * 5);
     embed
         .setDescription('What is the charge?')
         .setImage(gifs[index])

@@ -6,12 +6,6 @@ const {
     MessageEmbed,
 } = require('discord.js')
 
-const gifs = [
-    'https://c.tenor.com/X-dsWnwJkZAAAAAd/succulent-chinese-meal-democracy-manifest.gif',
-    'https://c.tenor.com/p2nzLP2fqdgAAAAd/charles-dozsa-under-arrest.gif',
-    'https://c.tenor.com/0xnVtnrCJnAAAAAd/charles-dozsa-succulent-chinese-meal.gif',
-]
-
 module.exports = {
     name: "points",
     timeout: 5,
