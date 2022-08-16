@@ -33,7 +33,7 @@ const responses = [
 
 client.on("messageCreate", (message) => {
     const index = Math.floor(Math.random() * 5);
-    if (message.content.toLowerCase().includes("succulent"))
+    if (message.content.toLowerCase().includes("succulent") && message.author.username !== "Succubot")
         message.reply({
             content: responses[index]
         });
