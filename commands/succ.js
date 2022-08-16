@@ -49,7 +49,7 @@ module.exports = {
             var res = new MessageEmbed()
                 .setDescription(`You are cheeky - you can't give yourself points... not very succulent of you...\n`)
 
-            interaction.channel.send({
+            interaction.channel.respond({
                 content: `<@${member.id}>`,
                 embeds: [res]
             });
@@ -66,7 +66,7 @@ module.exports = {
                 var res = new MessageEmbed()
                     .setDescription(`You have **${checkCache}** succulent points!\n`)
 
-                interaction.channel.send({
+                interaction.channel.respond({
                     content: `<@${targetMember.id}>`,
                     embeds: [res]
                 })

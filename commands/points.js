@@ -22,14 +22,11 @@ module.exports = {
             option
                 .setName('user')
                 .setDescription('Who do you want to see points for?')
-                .setRequired(false)
+                .setRequired(true)
         ),
 
     async execute(client, interaction, cache) {
         var member = interaction.options.getUser('user');
-
-        if (member === undefined || member === null || member === NaN)
-            member = interaction.member
 
         var checkCache = cache.get(member.id);
         if (checkCache === undefined || checkCache === null || checkCache === NaN)
@@ -38,8 +35,8 @@ module.exports = {
         var res = new MessageEmbed()
         .setDescription(`${member.username} has **${checkCache}** succulent points!\n`)
 
-        interaction.channel.send({
-            content: `<@${member.id}>`,
+        interaction.channel.respond({
+            content: `<@${interaction.member.id}>`,
             embeds: [res]
         })
     }
