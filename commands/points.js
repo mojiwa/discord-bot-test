@@ -29,7 +29,7 @@ module.exports = {
         var member = interaction.options.getUser('user');
 
         if (member === undefined || member === null || member === NaN)
-            interaction.member
+            member = interaction.member
 
         var checkCache = cache.get(member.id);
         if (checkCache === undefined || checkCache === null || checkCache === NaN)

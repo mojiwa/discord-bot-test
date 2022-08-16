@@ -12,6 +12,22 @@ const gifs = [
     'https://c.tenor.com/0xnVtnrCJnAAAAAd/charles-dozsa-succulent-chinese-meal.gif',
 ]
 
+const score = async function charge() {
+    var embed = new MessageEmbed()
+    .setColor('#FFDB69')
+    const index = Math.floor(Math.random() * 3);
+    embed
+        .setDescription('What is the charge?')
+        .setImage(gifs[index])
+    interaction.reply({
+        embeds: [embed]
+    })
+
+    var score = 1
+
+    return score
+}
+
 module.exports = {
     name: "succ",
     timeout: 5,
@@ -37,30 +53,10 @@ module.exports = {
                 content: `<@${member.id}>`,
                 embeds: [res]
             });
-
-            return;
         } else {
             var initCache = cache.get(targetMember.id);
             if (initCache === undefined || initCache === null || initCache === NaN)
                 initCache = 0;
-
-            var embed = new MessageEmbed()
-                .setColor('#FFDB69')
-
-            const index = Math.floor(Math.random() * 3);
-
-            const score = async function oven() {
-                embed
-                    .setDescription('What is the charge?')
-                    .setImage(gifs[index])
-                interaction.reply({
-                    embeds: [embed]
-                })
-
-                var score = 1
-
-                return score
-            }
 
             await score().then(() => {
                 const xp = initCache + 1;
@@ -74,8 +70,7 @@ module.exports = {
                     content: `<@${targetMember.id}>`,
                     embeds: [res]
                 })
-
             })
-    }
+        }
     }
 }
