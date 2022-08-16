@@ -12,7 +12,7 @@ const gifs = [
     'https://c.tenor.com/0xnVtnrCJnAAAAAd/charles-dozsa-succulent-chinese-meal.gif',
 ]
 
-const score = async function charge() {
+const score = async function charge(interaction) {
     var embed = new MessageEmbed()
     .setColor('#FFDB69')
     const index = Math.floor(Math.random() * 3);
@@ -58,7 +58,7 @@ module.exports = {
             if (initCache === undefined || initCache === null || initCache === NaN)
                 initCache = 0;
 
-            await score().then(() => {
+            await score(interaction).then(() => {
                 const xp = initCache + 1;
                 cache.set(targetMember.id, xp);
 
