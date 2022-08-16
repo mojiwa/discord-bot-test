@@ -30,6 +30,9 @@ module.exports = {
         const targetMember = interaction.options.getUser('user');
 
         var initCache = cache.get(targetMember.id);
+        console.log(initCache);
+        if (initCache === undefined || initCache === null || initCache === NaN)
+            initCache = 0;
 
         var embed = new MessageEmbed()
             .setColor('#FFDB69')
