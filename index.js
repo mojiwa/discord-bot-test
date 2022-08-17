@@ -10,10 +10,22 @@ const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
 });
 
+const mysql = require('mysql');
+
 const dotenv = require('dotenv');
 // import config IDs
 dotenv.config();
 const TOKEN = process.env.TOKEN;
+const USER = process.env.SQL_USER;
+const PASSWORD = process.env.SQL_PASSWORD
+
+var connection = mysql.createPool({
+    connectionLimit: 10,
+    host: 'remotemysql.com',
+    database: 'tFfU8HAy43',
+    user: USER,
+    password: PASSWORD
+});
 
 const startup = require('./src/startup');
 // run this script upon starting up the bot and pass in the client
@@ -49,10 +61,57 @@ client.on('interactionCreate', async (interaction) => {
 
 client.on("messageCreate", (message) => {
     const index = Math.floor(Math.random() * 9);
-    if (message.content.toLowerCase().includes("succ") && message.author.username !== "Succubot")
+    if (message.content.toLowerCase().includes("succ") && message.author.username !== "Succubot") {     
+        console.log(message);   
         message.reply({
             content: responses[index]
         });
+        connection.getConnection(function(err) {
+            var targetMember = message.author;
+            if (err)
+                return;
+            console.log("Connected");                    
+                                
+            connection.query(`SELECT messages FROM succubot WHERE user = ? AND guild = ?`, [String(targetMember.id), String(message.guildId)], function (err, result) {                
+                if (err)
+                    console.log(err);  
+                else {                                            
+                    if (result[0] === undefined || result[0] == null) {                                
+                        console.log("Inserting new record");
+                        connection.query(`INSERT INTO succubot (user, guild, messages) VALUES ("${targetMember.id}", "${message.guildId}", 1)`, function (err, result) {
+                            if (err)
+                                console.log(err);                            
+                        });
+                    } else {
+                        var messageCount = result[0].messages + 1;
+                        console.log(messageCount);
+                        console.log("Updating existing record");
+                        connection.query('UPDATE succubot SET messages = ? WHERE user = ? AND guild = ?', [messageCount, String(targetMember.id), String(message.guildId)], function (err, result) {
+                            if (err)
+                                console.log(err);
+                        });
+                        if (messageCount === 10 || messageCount === 20 || messageCount === 30 || messageCount === 40 || messageCount === 50 || messageCount === 60 || messageCount === 70 || messageCount === 80 || messageCount === 90 || messageCount === 100) {
+                            connection.query(`SELECT score FROM succubot WHERE user = ? AND guild = ?`, [String(targetMember.id), String(message.guildId)], function (err, result) {                
+                                if (err)
+                                    console.log(err);  
+                            var score = 0;
+                            
+                            if (result[0].score === undefined || result[0].score === null)
+                                score = 1;
+                            else 
+                                score = result[0].score + 1;
+                            
+                                connection.query('UPDATE succubot SET score = ? WHERE user = ? AND guild = ?', [score, String(targetMember.id), String(message.guildId)], function (err, result) {
+                                    if (err)
+                                        console.log(err);
+                                });
+                            });
+                        }
+                    }
+                }
+            });
+        });
+    }
 });
 
 

@@ -6,6 +6,22 @@ const {
     MessageEmbed,
 } = require('discord.js');
 
+const mysql = require('mysql');
+
+const dotenv = require('dotenv');
+// import config IDs
+dotenv.config();
+const USER = process.env.SQL_USER;
+const PASSWORD = process.env.SQL_PASSWORD
+
+var connection = mysql.createPool({
+    connectionLimit: 10,
+    host: 'remotemysql.com',
+    database: 'tFfU8HAy43',
+    user: USER,
+    password: PASSWORD
+});
+
 const gifs = [
     'https://c.tenor.com/X-dsWnwJkZAAAAAd/succulent-chinese-meal-democracy-manifest.gif',
     'https://c.tenor.com/p2nzLP2fqdgAAAAd/charles-dozsa-under-arrest.gif',
@@ -14,7 +30,7 @@ const gifs = [
     'https://c.tenor.com/1FAEq7NOiiYAAAAC/limp-penis.gif'
 ];
 
-const score = async function charge(interaction) {
+const postGif = async (interaction) => {
     var embed = new MessageEmbed()
                     .setColor('#FFDB69');
     const index = Math.floor(Math.random() * 5);
@@ -22,10 +38,6 @@ const score = async function charge(interaction) {
     interaction.reply({
         embeds: [embed]
     });
-
-    var score = 1;
-
-    return score;
 }
 
 module.exports = {
@@ -50,22 +62,42 @@ module.exports = {
                 content: `You are being cheeky. You cannot give yourself points... that's not very succulent of you.`
             });
         } else {
-            var initCache = cache.get(targetMember.id);
-            if (initCache === undefined || initCache === null || initCache === NaN)
-                initCache = 0;
+            
+            await postGif(interaction).then(() => {    
+                var newScore = 1;                         
+                connection.getConnection(function(err) {
+                    if (err)
+                        return;
+                    console.log("Connected");                    
+                                        
+                    connection.query(`SELECT score FROM succubot WHERE user = ? AND guild = ?`, [String(targetMember.id), String(interaction.guildId)], function (err, result) {
+                        if (err)
+                            console.log(err);  
+                        else {                                            
+                            if (result[0] === undefined) {                                
+                                console.log("Inserting new record");
+                                connection.query(`INSERT INTO succubot (user, guild, score) VALUES ("${targetMember.id}", "${interaction.guildId}", ${newScore})`, function (err, result) {
+                                    if (err)
+                                        console.log(err);                                    
+                                });
+                            } else {
+                                newScore = result[0].score + 1;
+                                console.log("Updating existing record");
+                                connection.query('UPDATE succubot SET score = ? WHERE user = ? AND guild = ?', [newScore, String(targetMember.id), String(interaction.guildId)], function (err, result) {
+                                    if (err)
+                                        console.log(err);                                    
+                                });
+                            }
+                        }
+                        var res = new MessageEmbed()
+                            .setDescription(`Congratulations! You have **${newScore}** succulent ${newScore < 2 ? "point" : "points"}!\n`);
 
-            await score(interaction).then(() => {
-                const xp = initCache + 1;
-                cache.set(targetMember.id, xp);
-
-                var checkCache = cache.get(targetMember.id);
-                var res = new MessageEmbed()
-                    .setDescription(`Congratulations! You have **${checkCache}** succulent points!\n`);
-
-                interaction.channel.send({
-                    content: `<@${targetMember.id}>`,
-                    embeds: [res]
-                });
+                        interaction.channel.send({
+                            content: `<@${targetMember.id}>`,
+                            embeds: [res]
+                        });
+                    });                    
+                });                
             });
         }
     }

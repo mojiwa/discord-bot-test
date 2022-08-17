@@ -6,6 +6,21 @@ const {
     MessageEmbed,
 } = require('discord.js');
 
+const mysql = require('mysql');
+const dotenv = require('dotenv');
+// import config IDs
+dotenv.config();
+const USER = process.env.SQL_USER;
+const PASSWORD = process.env.SQL_PASSWORD
+
+var connection = mysql.createPool({
+    connectionLimit: 10,
+    host: 'remotemysql.com',
+    database: 'tFfU8HAy43',
+    user: USER,
+    password: PASSWORD
+});
+
 module.exports = {
     name: "points",
     timeout: 5,
@@ -21,13 +36,20 @@ module.exports = {
 
     async execute(client, interaction, cache) {
         var member = interaction.options.getUser('user');
-
-        var checkCache = cache.get(member.id);
-        if (checkCache === undefined || checkCache === null || checkCache === NaN)
-            checkCache = 0;
-
-        return interaction.reply({
-            content: `${member.username} has **${checkCache}** succulent points!\n`
+        var score = 0;
+        connection.query(`SELECT score FROM succubot WHERE user = ? AND guild = ?`, [String(member.id), String(interaction.guildId)], function (err, result) {
+            if (err)
+                console.log(err);
+            else {
+                if (result[0].score === null)
+                    score = 0;
+                else 
+                    score = result[0].score;
+            }
+            
+            return interaction.reply({
+                content: `${member.username} has **${score}** succulent ${score === 1 ? "point" : "points"}!\n`
+            });
         });
     }
 }
