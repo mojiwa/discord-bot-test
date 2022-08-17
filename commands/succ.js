@@ -4,7 +4,7 @@ const {
 
 const {
     MessageEmbed,
-} = require('discord.js')
+} = require('discord.js');
 
 const gifs = [
     'https://c.tenor.com/X-dsWnwJkZAAAAAd/succulent-chinese-meal-democracy-manifest.gif',
@@ -12,21 +12,20 @@ const gifs = [
     'https://c.tenor.com/0xnVtnrCJnAAAAAd/charles-dozsa-succulent-chinese-meal.gif',
     'https://c.tenor.com/GiEE0XXYT2gAAAAd/succulent-chinese-meal-paul-charles-dozsa.gif',
     'https://c.tenor.com/1FAEq7NOiiYAAAAC/limp-penis.gif'
-]
+];
 
 const score = async function charge(interaction) {
     var embed = new MessageEmbed()
-    .setColor('#FFDB69')
+                    .setColor('#FFDB69');
     const index = Math.floor(Math.random() * 5);
-    embed
-        .setImage(gifs[index])
+    embed.setImage(gifs[index]);
     interaction.reply({
         embeds: [embed]
-    })
+    });
 
-    var score = 1
+    var score = 1;
 
-    return score
+    return score;
 }
 
 module.exports = {
@@ -34,7 +33,7 @@ module.exports = {
     timeout: 5,
     data: new SlashCommandBuilder()
         .setName('succ')
-        .setDescription('succulent')
+        .setDescription('Award succulent points to a member of chat')
         .addUserOption(option => 
             option
                 .setName('user')
@@ -43,7 +42,7 @@ module.exports = {
         ),
 
     async execute(client, interaction, cache) {
-        const member = interaction.member
+        const member = interaction.member;
         const targetMember = interaction.options.getUser('user');
 
         if (member.id === targetMember.id) {
@@ -61,13 +60,13 @@ module.exports = {
 
                 var checkCache = cache.get(targetMember.id);
                 var res = new MessageEmbed()
-                    .setDescription(`Congratulations! You have **${checkCache}** succulent points!\n`)
+                    .setDescription(`Congratulations! You have **${checkCache}** succulent points!\n`);
 
                 interaction.channel.send({
                     content: `<@${targetMember.id}>`,
                     embeds: [res]
-                })
-            })
+                });
+            });
         }
     }
 }

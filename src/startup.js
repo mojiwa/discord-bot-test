@@ -1,12 +1,12 @@
 const { Collection } = require('discord.js');
-const { REST } = require('@discordjs/rest')
+const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
-const TOKEN = process.env.TOKEN
-const CLIENT_ID = process.env.CLIENT_ID
-const GUILD_ID = process.env.GUILD_ID
+const TOKEN = process.env.TOKEN;
+const CLIENT_ID = process.env.CLIENT_ID;
+const GUILD_ID = process.env.GUILD_ID;
 
-const fs = require('fs')
+const fs = require('fs');
 
 module.exports = (client) => {
 
@@ -41,8 +41,8 @@ module.exports = (client) => {
                 } else {
                     await rest.put(
                         Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
-                        body: commands
-                    },
+                            body: commands 
+                        }
                     );
                     console.log('Successfully registered application commands for development guild');
                 }
@@ -50,7 +50,6 @@ module.exports = (client) => {
                 if (error) console.error(error);
             }
         })();
-
     });
 
 }

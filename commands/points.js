@@ -4,14 +4,14 @@ const {
 
 const {
     MessageEmbed,
-} = require('discord.js')
+} = require('discord.js');
 
 module.exports = {
     name: "points",
     timeout: 5,
     data: new SlashCommandBuilder()
         .setName('points')
-        .setDescription('Get points')
+        .setDescription('Find out how many points someone has')
         .addUserOption(option => 
             option
                 .setName('user')
