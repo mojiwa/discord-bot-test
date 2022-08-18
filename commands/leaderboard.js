@@ -29,7 +29,7 @@ module.exports = {
         .setDescription('Find out who is the most succulent meal'),
 
     async execute(client, interaction, cache) {
-        connection.query(`SELECT user, score FROM succubot WHERE user = ? AND guild = ? AND score IS NOT NULL`, [String(member.id), String(interaction.guildId)], function (err, result) {
+        connection.query(`SELECT user, score FROM succubot WHERE score IS NOT NULL`, function (err, result) {
             if (err)
                 console.log(err);
             else {
