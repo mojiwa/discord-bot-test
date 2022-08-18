@@ -56,6 +56,7 @@ module.exports = {
     async execute(client, interaction, cache) {
         const member = interaction.member;
         const targetMember = interaction.options.getUser('user');
+        var op = client.users.fetch(member.id);
 
         if (member.id === targetMember.id) {
             return interaction.reply({
@@ -91,7 +92,7 @@ module.exports = {
                         }
                         console.log(member);
                         var res = new MessageEmbed()
-                            .setDescription(`@${member} just gave you a succulent point.\nYou now have **${newScore}** succulent ${newScore < 2 ? "point" : "points"}!\n`);
+                            .setDescription(`${op.username} just gave you a succulent point.\nYou now have **${newScore}** succulent ${newScore < 2 ? "point" : "points"}!\n`);
 
                         interaction.channel.send({
                             content: `<@${targetMember.id}>`,

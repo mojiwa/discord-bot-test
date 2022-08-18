@@ -37,14 +37,21 @@ module.exports = {
             }
 
             result = result.sort((x, y) => x.score < y.score ? 1 : 0);
+
+            var leaderboard = "";
+
+            result.forEach((row) => {
+                var member = client.users.fetch(row.user);
+                var score = row.score;
+                leaderboard.concat(`${member.username} - ${score}\n`);
+            });
+
+            var leader = client.users.fetch(result[0].user);
+
+            leaderboard.concat(`Congratulations ${leader.username}! You are in the lead`);
             
             return interaction.reply({
-                content: `${result.forEach((row) => {
-                    var member = row.user;
-                    var score = row.score;
-                    `${member} - ${score}\n`
-                })}
-                Congratulations ${result[0].user}! You are in the lead`
+                content: `${leaderboard}`
             });
         });
     }
