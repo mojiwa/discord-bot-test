@@ -58,8 +58,8 @@ module.exports = {
     name: "leaderboard",
     timeout: 5,
     data: new SlashCommandBuilder()
-        .setName('points')
-        .setDescription('Find out how many points someone has'),
+        .setName('leaderboard')
+        .setDescription('Find out who is the most succulent meal'),
 
     async execute(client, interaction, cache) {
         connection.query(`SELECT user, score FROM succubot WHERE user = ? AND guild = ? AND score IS NOT NULL`, [String(member.id), String(interaction.guildId)], function (err, result) {
