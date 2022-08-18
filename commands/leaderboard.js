@@ -35,9 +35,16 @@ module.exports = {
             else {
               console.log(result);
             }
+
+            result = result.sort((x, y) => x.score < y.score ? 1 : 0);
             
             return interaction.reply({
-                content: `Nothing to see here...`
+                content: `${result.forEach((row) => {
+                    var member = row.user;
+                    var score = row.score;
+                    `${member} - ${score}\n`
+                })}
+                Congratulations ${result[0].user}! You are in the lead`
             });
         });
     }

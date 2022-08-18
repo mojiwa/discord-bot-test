@@ -89,8 +89,9 @@ module.exports = {
                                 });
                             }
                         }
+                        console.log(member);
                         var res = new MessageEmbed()
-                            .setDescription(`@${member.id} just gave you a succulent point.\nYou now have **${newScore}** succulent ${newScore < 2 ? "point" : "points"}!\n`);
+                            .setDescription(`@${member} just gave you a succulent point.\nYou now have **${newScore}** succulent ${newScore < 2 ? "point" : "points"}!\n`);
 
                         interaction.channel.send({
                             content: `<@${targetMember.id}>`,
