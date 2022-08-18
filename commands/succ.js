@@ -56,7 +56,7 @@ module.exports = {
     async execute(client, interaction, cache) {
         const member = interaction.member;
         const targetMember = interaction.options.getUser('user');
-        var op = client.users.fetch(member.id);
+        var op = await client.users.fetch(member.id);
 
         if (member.id === targetMember.id) {
             return interaction.reply({
@@ -77,7 +77,7 @@ module.exports = {
                         else {                                            
                             if (result[0] === undefined) {                                
                                 console.log("Inserting new record");
-                                connection.query(`INSERT INTO succubot (user, guild, score) VALUES ("${targetMember.id}", "${interaction.guildId}", ${newScore})`, function (err, result) {
+                                connection.query(`INSERT INTO succubot (user, username, guild, score) VALUES ("${targetMember.id}", "${targetMember.username}", "${interaction.guildId}", ${newScore})`, function (err, result) {
                                     if (err)
                                         console.log(err);                                    
                                 });
@@ -89,10 +89,9 @@ module.exports = {
                                         console.log(err);                                    
                                 });
                             }
-                        }
-                        console.log(op);
+                        }                        
                         var res = new MessageEmbed()
-                            .setDescription(`${op.user.username} just gave you a succulent point.\nYou now have **${newScore}** succulent ${newScore < 2 ? "point" : "points"}!\n`);
+                            .setDescription(`${op.username} just gave you a succulent point.\nYou now have **${newScore}** succulent ${newScore < 2 ? "point" : "points"}!\n`);
 
                         interaction.channel.send({
                             content: `<@${targetMember.id}>`,

@@ -82,7 +82,7 @@ client.on("messageCreate", (message) => {
                 else {                                            
                     if (result[0] === undefined || result[0] == null) {                                
                         console.log("Inserting new record");
-                        connection.query(`INSERT INTO succubot (user, guild, messages) VALUES ("${targetMember.id}", "${message.guildId}", 1)`, function (err, result) {
+                        connection.query(`INSERT INTO succubot (user, username, guild, messages) VALUES ("${targetMember.id}", "${targetMember.username}", "${message.guildId}", 1)`, function (err, result) {
                             if (err)
                                 console.log(err);                            
                         });

@@ -22,15 +22,17 @@ var connection = mysql.createPool({
 });
 
 async function getLeaderboard(client, result) {
-    result.forEach((row) => {
-        var member = client.users.fetch(row.user);
-        var score = row.score;
-        leaderboard.concat(`${member.user.username} - ${score}\n`);
+    let leaderboard = "";
+    result.forEach(async (row) => {        
+        var member = await client.users.fetch(row.user);        
+        var score = row.score;        
+        leaderboard.concat(`${member.username} - ${score}\n`);
     });
 
     var leader = client.users.fetch(result[0].user);
 
-    leaderboard.concat(`Congratulations ${leader.user.username}! You are in the lead`);
+    leaderboard.concat(`Congratulations ${leader.username}! You are in the lead`);
+    console.log(leaderboard);
     return leaderboard;
 }
 
@@ -42,22 +44,25 @@ module.exports = {
         .setDescription('Find out who is the most succulent meal'),
 
     async execute(client, interaction, cache) {
-        connection.query(`SELECT user, score FROM succubot WHERE score IS NOT NULL`, function (err, result) {
+        connection.query(`SELECT username, score FROM succubot WHERE score IS NOT NULL`, async function (err, result) {
             if (err)
                 console.log(err);
-            else {
-              console.log(result);
-            }
 
-            result = result.sort((x, y) => x.score < y.score ? 1 : 0);
+            var leaderboard = [];
 
-            var leaderboard = await getLeaderboard();
-
-            console.log(leaderboard);
-            
-            return interaction.reply({
-                content: `${leaderboard}`
+            let newResult = result.map(({username, score}) => ({username, score}));
+            newResult = newResult.sort((x, y) => x.score < y.score ? 1 : -1);
+            newResult.forEach((row) => {
+                leaderboard.push(`\n${row.username} - ${row.score}`);
             });
+
+            leaderboard.push(`\n\nCongratulations ${newResult[0].username}! You are in the lead.`);
+            
+            leaderboard = leaderboard.join('');
+
+            return interaction.reply({
+                content: `\n\n${leaderboard}`
+            });                              
         });
     }
 }
