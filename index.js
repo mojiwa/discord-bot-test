@@ -60,6 +60,10 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 client.on("messageCreate", (message) => {
+    const playOrNay = Math.floor(Math.random() * 10);
+    // randomize whether or not the command is called
+    if (playOrNay > 5) 
+        return;
     const index = Math.floor(Math.random() * 9);
     if (message.content.toLowerCase().includes("succ") && message.author.username !== "Succubot") {     
         console.log(message);   

@@ -53,3 +53,25 @@ module.exports = {
         });
     }
 }
+
+module.exports = {
+    name: "leaderboard",
+    timeout: 5,
+    data: new SlashCommandBuilder()
+        .setName('points')
+        .setDescription('Find out how many points someone has'),
+
+    async execute(client, interaction, cache) {
+        connection.query(`SELECT user, score FROM succubot WHERE user = ? AND guild = ? AND score IS NOT NULL`, [String(member.id), String(interaction.guildId)], function (err, result) {
+            if (err)
+                console.log(err);
+            else {
+              console.log(result);
+            }
+            
+            return interaction.reply({
+                content: `Nothing to see here...`
+            });
+        });
+    }
+}
