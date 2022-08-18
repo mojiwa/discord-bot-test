@@ -21,6 +21,19 @@ var connection = mysql.createPool({
     password: PASSWORD
 });
 
+async function getLeaderboard(client, result) {
+    result.forEach((row) => {
+        var member = client.users.fetch(row.user);
+        var score = row.score;
+        leaderboard.concat(`${member.user.username} - ${score}\n`);
+    });
+
+    var leader = client.users.fetch(result[0].user);
+
+    leaderboard.concat(`Congratulations ${leader.user.username}! You are in the lead`);
+    return leaderboard;
+}
+
 module.exports = {
     name: "leaderboard",
     timeout: 5,
@@ -38,17 +51,9 @@ module.exports = {
 
             result = result.sort((x, y) => x.score < y.score ? 1 : 0);
 
-            var leaderboard = "";
+            var leaderboard = await getLeaderboard();
 
-            result.forEach((row) => {
-                var member = client.users.fetch(row.user);
-                var score = row.score;
-                leaderboard.concat(`${member.username} - ${score}\n`);
-            });
-
-            var leader = client.users.fetch(result[0].user);
-
-            leaderboard.concat(`Congratulations ${leader.username}! You are in the lead`);
+            console.log(leaderboard);
             
             return interaction.reply({
                 content: `${leaderboard}`
