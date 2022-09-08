@@ -15,8 +15,8 @@ const PASSWORD = process.env.SQL_PASSWORD
 
 var connection = mysql.createPool({
     connectionLimit: 10,
-    host: 'remotemysql.com',
-    database: 'tFfU8HAy43',
+    host: 'db-eu-03.sparkedhost.us',
+    database: 's73880_succubot',
     user: USER,
     password: PASSWORD
 });
@@ -31,7 +31,7 @@ async function getLeaderboard(client, result) {
 
     var leader = client.users.fetch(result[0].user);
 
-    leaderboard.concat(`Congratulations ${leader.username}! You are in the lead`);
+    leaderboard.concat(`Congratulations ${leader.username}! You are in the lead (even if it's a draw)`);
     console.log(leaderboard);
     return leaderboard;
 }
