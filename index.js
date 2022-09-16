@@ -21,8 +21,8 @@ const PASSWORD = process.env.SQL_PASSWORD
 
 var connection = mysql.createPool({
     connectionLimit: 10,
-    host: 'remotemysql.com',
-    database: 'tFfU8HAy43',
+    host: 'db-eu-03.sparkedhost.us',
+    database: 's73880_succubot',
     user: USER,
     password: PASSWORD
 });
@@ -60,13 +60,34 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 client.on("messageCreate", (message) => {
+    var bans = 1;
+    if (message.content.toLowerCase().includes("!banbim")) {
+
+        connection.query(`SELECT * FROM banbim`, function (err, result) {                
+            if (err)
+                console.log(err);  
+        
+        if (result[0].bans === undefined || result[0].bans === null) {
+            bans = 1;
+        } else {
+            bans = result[0].bans + 1;
+        
+            connection.query('UPDATE banbim SET bans = ?', [bans], function (err, result) {
+                if (err)
+                    console.log(err);
+            });
+        }
+        message.reply({
+            content: `Bim has been a naughty boy ${bans} times`
+        });
+    });
+    }
     const playOrNay = Math.floor(Math.random() * 10);
     // randomize whether or not the command is called
     if (playOrNay > 5) 
         return;
     const index = Math.floor(Math.random() * 9);
     if (message.content.toLowerCase().includes("succ") && message.author.username !== "Succubot") {     
-        console.log(message);   
         message.reply({
             content: responses[index]
         });
