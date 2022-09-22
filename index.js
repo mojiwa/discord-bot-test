@@ -78,7 +78,7 @@ client.on("messageCreate", (message) => {
             });
         }
         message.reply({
-            content: `Bim has been a naughty boy ${bans} times`
+            content: `Bim has been a noighty boy ${bans} times`
         });
     });
     }
